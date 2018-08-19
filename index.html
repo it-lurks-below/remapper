@@ -149,6 +149,10 @@ body {
   padding-left: 12px;
 }
 
+.key-wrapper.alt {
+  display: none;
+}
+
 </style>
 </head>
 <body>  
@@ -207,13 +211,25 @@ body {
     <div data-key='key_inventory' class='key-title'>Inventory</div>
     <div data-key='key_inventory' class='key'></div>
   </div>
+  <div data-key='key_inventory_alt' class='key-wrapper alt'>
+    <div data-key='key_inventory_alt' class='key-title'>InventoryAlt</div>
+    <div data-key='key_inventory_alt' class='key'></div>
+  </div>
   <div data-key='key_crafting' class='key-wrapper'>
     <div data-key='key_crafting' class='key-title'>Crafting</div>
     <div data-key='key_crafting' class='key'></div>
   </div>
+  <div data-key='key_crafting_alt' class='key-wrapper alt'>
+    <div data-key='key_crafting_alt' class='key-title'>CraftingAlt</div>
+    <div data-key='key_crafting_alt' class='key'></div>
+  </div>
   <div data-key='key_minimap' class='key-wrapper'>
     <div data-key='key_minimap' class='key-title'>Minimap</div>
     <div data-key='key_minimap' class='key'></div>
+  </div>
+  <div data-key='key_minimap_alt' class='key-wrapper alt'>
+    <div data-key='key_minimap_alt' class='key-title'>MinimapAlt</div>
+    <div data-key='key_minimap_alt' class='key'></div>
   </div>
   <div data-key='key_minimap_up' class='key-wrapper'>
     <div data-key='key_minimap_up' class='key-title'>MinimapUp</div>
@@ -710,21 +726,23 @@ const delCode = key => {
 const setCode = (key, code) => {
   const el = getElement(key)
   if (!el) return
-  console.log(code, getKeyWithCode(code))
   delCode(getKeyWithCode(code))
   el.textContent = keyAliases[code] || ''
   el.code = code
 }
 
 localStorage.config || (localStorage.config = defaultConfigText)
-for (const [ key, value ] of Object.entries(parseConfig(localStorage.config))) {
-  setCode(key, value)
+for (const [ key, code ] of Object.entries(parseConfig(localStorage.config))) {
+  getKeyWithCode(code) || setCode(key, code)
 }
 
 const configElement = document.getElementById('config')
 const updateConfig = () => localStorage.config = configElement
   .textContent = Object.keys(defaultConfig)
-  .map(key => `${key} ${getElement(key) ? getElement(key).code : defaultConfig[key]}`)
+  .map(key => {
+    if (getElement(key)) return `${key} ${getElement(key).code || 0}`
+    return `${key} ${defaultConfig[key] || 0}`
+  })
   .join('\n')
 
 let currentElement = document.querySelector(':hover')
