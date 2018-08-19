@@ -713,7 +713,7 @@ const setCode = (key, code) => {
   el.code = code
 }
 
-localStorage.config || (localStorage.config = defaultConfig)
+localStorage.config || (localStorage.config = defaultConfigText)
 for (const [ key, value ] of Object.entries(parseConfig(localStorage.config))) {
   setCode(key, value)
 }
