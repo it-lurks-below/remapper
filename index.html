@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>It Lurks Below Key Remapper</title>
+<style type="text/css">
+html, body {
+  padding: 0;
+  margin: 0;
+  background: #181512;
+  color: #e7d7ab;
+}
+
+body {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: monospace;
+  -webkit-font-smoothing: none;
+  font-size: 14px;
+  flex-direction: column;
+}
+
+#bar {
+  display: flex;
+  width: 885px;
+  height: 96px;
+  padding: 21px 48px;
+  box-sizing: border-box;
+  justify-content: space-between;
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA3UAAABgBAMAAABI00amAAAALVBMVEUeGxgYFRI/OzUtJyAwLCZNQzNKPSbn16saFxRUSDZWTkQnIx1aSDZrWjwAAABShQhIAAAD+klEQVR42u3dL0/dUBgG8Lddwg3ZxC3LEJuB+wkgxQ1BsioU5ooJEmaq62aXYJrMzFxRN0muxSypIpmYqNgXQC2zfIadnpa7Nr2X/jkl933b59mCKE8L9/zIKS3lQA9/5z3k8p6IokXLXXajebd8rOxo8HENEy0MmiY7XsAOdrDbgp177HiGOV+GYeietN5veZPtZb6j+WdrcLRrt3PTZEci2MEOdtuwO/Gc165JkjsnvnW75H3sdshpEn6NzT/hvtLwUMmvUDV7+xBH5J3BDnaw247d/ILIcoYX0nGGlynRCxd2IgM7uanYzao5lL0xt9ubVSN7I+zkboSd3I0438kN7OQGdnJTtkOEBXZyAzu5edJudkCzDSF7JqWg4l+RvyG040spwI4tDezGajcr5oCI7PTWxJrs6XdLKajs+P6ndZ19378SUrBLOLBjRGNqVxyDPdjxKthFnHq7XLga/TVAQgoqvq9fvlW+0zJNh0tFRqHWbkp5LNgxK9gFHNixounBbvJZJ8jsDh3aEHU2ISEFFXUeISsdh/S/DlmPW/Z9GQVtp3iCSbCyc49gJ6HQwC7Q/2DHrpDaTYKUb8R2UyKrNCwyClW7l3H4ZWRzJk+aJnYZHey40XS0G8Wc6Uyr337rLfu+jEL1GsFylt9hJ6Gw3m4UcyZ3mno7jZPOmsHo7HSy00f2dnWnV0ahavcq8c7GMWcyp2lmp+kIdrxoOtmN5H7majTyWP9PJTIKqV2geILx3YvmTtODHeWBHbfC6hphfHbZOKwGp3jLQkah1s5ZBXbMCnYBB3asaIztihmeHenkY6KTDYuMgl3EgR0nGkO7cpiMPOzyQjmwY0UDO9jBjmFhvZ3rjuF7FdaXALUFu4QDO0Y0Bna4Nude2HBtHv8Io28Dt+N+q/nJQp3dwO9Fc6dp9XME2LGi6WrnvF3m57v81xWGaMf8kYZmzzzoBLDjRdOLXaoXwI5dYcOcmfz0hm/H/NHZmkJjuwE/a8SWpqZQmjNhx4umi131WaNJQAN8tpb7r2jVFEpzJux40fRgp+lgx7BQmDPHa8dzKYDaQr2dYhvmPTHuNE3sKA/seNH0YDcJsCYVz0JhzoQdL5o2dlgLjhdNn+v4Ye1TZoWSHdat5UTTat1a2LGiMbYr5oDHCvlYYz8v2LNCYMeJpqUd/rYFI5q6Av6W06ACO7mBndzATm5gJzewk5tHO+fNvF0u72k3mj9z7n9TtJibJ1r0/YrMD2V+kAuCHeyeDOyeze7Y8VpmeRMq8WfPB9czz/kyvHYb1cLeXpTpcZqNMBHsVGBnGtjlaWz38Mdtl9PEeRe7chLfNqold45qskjDET6CHez4Zrh2/wB4Yabn8a0ILQAAAABJRU5ErkJggg==');
+  flex-shrink: 0;
+}
+
+#normal, #ancient {
+  display: flex;
+}
+
+.key {
+  text-shadow: 2px 2px 0 black, -2px 2px 0 black, 2px -2px 0 black, -2px -2px 0 black;
+  filter: contrast(1);
+  cursor: default;
+  overflow: hidden;
+
+}
+.btn .key {
+  padding-bottom: 6px;
+  padding-top: 35px;
+  height: 100%;
+  width: 50%;
+  box-sizing: border-box;
+}
+
+.key.alt:hover {
+  background-color: rgba(255, 150, 0, 0.13);
+}
+
+.key.normal:hover {
+  background-color: rgba(0, 150, 255, 0.13);
+}
+
+.key.alt {
+  padding-left: 8px;
+  color: #ffee66;
+}
+.key.normal {
+  padding-right: 8px;
+  color: #b6e1ff;
+  text-align: right;
+}
+
+.btn {
+  width: 60px;
+  height: 60px;
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-end;
+}
+
+#normal .btn {
+  margin-right: 6px;
+}
+
+#ancient .btn {
+  margin-left: 6px;
+}
+
+.btn:hover {
+  background-image: url('data:image/gif;base64,R0lGODlhPAA8AIABAOfXq////yH/C1hNUCBEYXRhWE1QPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS4zLWMwMTEgNjYuMTQ1NjYxLCAyMDEyLzAyLzA2LTE0OjU2OjI3ICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIiB4bWxuczpzdFJlZj0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL3NUeXBlL1Jlc291cmNlUmVmIyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M2IChXaW5kb3dzKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDoxOTEzRkExNkEzOTUxMUU4QUJFQ0E2RkJBOTdENUI1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDoxOTEzRkExN0EzOTUxMUU4QUJFQ0E2RkJBOTdENUI1NyI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjE5MTNGQTE0QTM5NTExRThBQkVDQTZGQkE5N0Q1QjU3IiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjE5MTNGQTE1QTM5NTExRThBQkVDQTZGQkE5N0Q1QjU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+Af/+/fz7+vn49/b19PPy8fDv7u3s6+rp6Ofm5eTj4uHg397d3Nva2djX1tXU09LR0M/OzczLysnIx8bFxMPCwcC/vr28u7q5uLe2tbSzsrGwr66trKuqqainpqWko6KhoJ+enZybmpmYl5aVlJOSkZCPjo2Mi4qJiIeGhYSDgoGAf359fHt6eXh3dnV0c3JxcG9ubWxramloZ2ZlZGNiYWBfXl1cW1pZWFdWVVRTUlFQT05NTEtKSUhHRkVEQ0JBQD8+PTw7Ojk4NzY1NDMyMTAvLi0sKyopKCcmJSQjIiEgHx4dHBsaGRgXFhUUExIREA8ODQwLCgkIBwYFBAMCAQAAIfkEAQAAAQAsAAAAADwAPAAAAriEg6bL7Q8XCm3Gi/NJzOoPbpRYTeaJpqpamu0Kx+vLSfKN14rn5H4cAvyGqSDxyIMgl8AO84miQZ/S6bJqPWKzwy3X5/3iwmIZuQw7o1nOdbftBsPj4zndbL+n83q2rY/3B7gnOOi3Y0iImHgowhjF96jWN6lXeXdJlxm36da59okWWjYqVvp1ypWatWrVOvUKFUsVyYgxaASYS/mQ5IhpN9tUOELM2bYYpHzhK6SzDJ2MHE1NYlAAADs=');
+}
+
+#tip {
+  color: #927c55;
+}
+
+#keys .key {
+  color: #ffa2b2
+}
+
+#keys {
+  display: flex;
+  width: 885px;
+  padding-bottom: 2px;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+}
+
+.key-title {
+  color: #8e8374;
+  padding-bottom: 8px;
+}
+
+.key-wrapper, #config {
+  box-sizing: border-box;
+  background: #1e1b18;
+  border: 3px solid #181512;
+  box-shadow: 0 0 0 3px #3f3b35;
+}
+
+.key-wrapper {
+  flex: 1;
+  text-align: center;
+  padding: 12px;
+  margin: 6px;
+  cursor: default;
+}
+
+.key-wrapper:hover {
+  background: #3a172c;
+  box-shadow: 0 0 0 3px #e7d7ab;
+}
+
+#config {
+  overflow-y: scroll;
+  overflow-x: hidden;
+  width: 873px;
+  padding: 6px 12px;
+  margin: 8px 0;
+  max-height: 60vh;
+}
+
+#banner {
+  display: flex;
+  box-shadow: inset 0 0 30px 20px #181512;
+  background: #130d07;
+}
+
+</style>
+</head>
+<body>  
+<div id='banner'>
+  <img src="logo.png" height="64">
+
+  <h1 id='title' class='text'>
+    KeyMapper
+  </h1>
+</div>
+<div id='tip' class='text'>
+  <p>
+    Hover the buttons with your mouse and press the key you want to bind on your keyboard
+    <br>
+    Right Click to remove bind
+  </p>
+</div>
+
+<div id="keys">
+<!--   <div data-key='key_move_up' class='key-wrapper'>
+    <div data-key='key_move_up' class="key-title">Up</div>
+    <div data-key='key_move_up' class='key'></div>
+  </div> -->
+  <div data-key='key_jump' class='key-wrapper'>
+    <div data-key='key_jump' class="key-title">Jump</div>
+    <div data-key='key_jump' class='key'>-</div>
+  </div>
+  <div data-key='key_move_left' class='key-wrapper'>
+    <div data-key='key_move_left' class="key-title">Left</div>
+    <div data-key='key_move_left' class='key'>-</div>
+  </div>
+  <div data-key='key_crouch' class='key-wrapper'>
+    <div data-key='key_crouch' class="key-title">Crouch</div>
+    <div data-key='key_crouch' class='key'>-</div>
+  </div>
+  <div data-key='key_move_right' class='key-wrapper'>
+    <div data-key='key_move_right' class="key-title">Right</div>
+    <div data-key='key_move_right' class='key'>-</div>
+  </div>
+  <div data-key='key_interact' class='key-wrapper'>
+    <div data-key='key_interact' class="key-title">Interact</div>
+    <div data-key='key_interact' class='key'>-</div>
+  </div>
+  <div data-key='key_recharge' class='key-wrapper'>
+    <div data-key='key_recharge' class="key-title">Recharge</div>
+    <div data-key='key_recharge' class='key'>-</div>
+  </div>
+  <div data-key='key_sleep' class='key-wrapper'>
+    <div data-key='key_sleep' class="key-title">Sleep</div>
+    <div data-key='key_sleep' class='key'>-</div>
+  </div>
+  <div data-key='key_shift' class='key-wrapper'>
+    <div data-key='key_shift' class="key-title">Shift</div>
+    <div data-key='key_shift' class='key'>-</div>
+  </div>
+  <div data-key='key_inventory' class='key-wrapper'>
+    <div data-key='key_inventory' class='key-title'>Inventory</div>
+    <div data-key='key_inventory' class='key'></div>
+  </div>
+  <div data-key='key_crafting' class='key-wrapper'>
+    <div data-key='key_crafting' class='key-title'>Crafting</div>
+    <div data-key='key_crafting' class='key'></div>
+  </div>
+  <div data-key='key_minimap' class='key-wrapper'>
+    <div data-key='key_minimap' class='key-title'>Minimap</div>
+    <div data-key='key_minimap' class='key'></div>
+  </div>
+  <div data-key='key_minimap_up' class='key-wrapper'>
+    <div data-key='key_minimap_up' class='key-title'>MinimapUp</div>
+    <div data-key='key_minimap_up' class='key'></div>
+  </div>
+  <div data-key='key_minimap_down' class='key-wrapper'>
+    <div data-key='key_minimap_down' class='key-title'>MinimapDown</div>
+    <div data-key='key_minimap_down' class='key'></div>
+  </div>
+  <div data-key='key_survival' class='key-wrapper'>
+    <div data-key='key_survival' class='key-title'>Survival</div>
+    <div data-key='key_survival' class='key'></div>
+  </div>
+  <div data-key='key_enter' class='key-wrapper'>
+    <div data-key='key_enter' class='key-title'>Enter</div>
+    <div data-key='key_enter' class='key'></div>
+  </div>
+  <div data-key='key_escape' class='key-wrapper'>
+    <div data-key='key_escape' class='key-title'>Escape</div>
+    <div data-key='key_escape' class='key'></div>
+  </div>
+  <div data-key='key_recall' class='key-wrapper'>
+    <div data-key='key_recall' class='key-title'>Recall</div>
+    <div data-key='key_recall' class='key'></div>
+  </div>
+</div>
+
+<div id="bar">
+  <div id='normal'>
+    <div class='btn'>
+      <div data-key='key_hotbar_alt_1' class='key alt'></div>
+      <div data-key='key_hotbar_1' class='key normal'></div>
+    </div>
+    <div class='btn'>
+      <div data-key='key_hotbar_alt_2' class='key alt'></div>
+      <div data-key='key_hotbar_2' class='key normal'></div>
+    </div>
+    <div class='btn'>
+      <div data-key='key_hotbar_alt_3' class='key alt'></div>
+      <div data-key='key_hotbar_3' class='key normal'></div>
+    </div>
+    <div class='btn'>
+      <div data-key='key_hotbar_alt_4' class='key alt'></div>
+      <div data-key='key_hotbar_4' class='key normal'></div>
+    </div>
+    <div class='btn'>
+      <div data-key='key_hotbar_alt_5' class='key alt'></div>
+      <div data-key='key_hotbar_5' class='key normal'></div>
+    </div>
+    <div class='btn'>
+      <div data-key='key_hotbar_alt_6' class='key alt'></div>
+      <div data-key='key_hotbar_6' class='key normal'></div>
+    </div>
+  </div>
+  <div id='ancient'>
+    <div class='btn'>
+      <div data-key='key_hotbar_alt_7' class='key alt'></div>
+      <div data-key='key_hotbar_7' class='key normal'></div>
+    </div>
+    <div class='btn'>
+      <div data-key='key_hotbar_alt_8' class='key alt'></div>
+      <div data-key='key_hotbar_8' class='key normal'></div>
+    </div>
+    <div class='btn'>
+      <div data-key='key_hotbar_alt_9' class='key alt'></div>
+      <div data-key='key_hotbar_9' class='key normal'></div>
+    </div>
+    <div class='btn'>
+      <div data-key='key_hotbar_alt_10' class='key alt'></div>
+      <div data-key='key_hotbar_10' class='key normal'></div>
+    </div>
+    <div class='btn'>
+      <div data-key='key_hotbar_alt_11' class='key alt'></div>
+      <div data-key='key_hotbar_11' class='key normal'></div>
+    </div>
+    <div class='btn'>
+      <div data-key='key_hotbar_alt_12' class='key alt'></div>
+      <div data-key='key_hotbar_12' class='key normal'></div>
+    </div>
+  </div>
+</div>
+<pre id='config'>
+
+</pre>
+<script type="text/javascript">
+const SDLKeys = {
+  Unidentified: 0,
+  Backspace: 8,
+  Tab: 9,
+  Enter: 13,
+  Escape: 27,
+  Space: 32,
+  Exclaim: 33,
+  Quotedbl: 34,
+  Hash: 35,
+  Dollar: 36,
+  Percent: 37,
+  Ampersand: 38,
+  Quote: 39,
+  Leftparen: 40,
+  Rightparen: 41,
+  Asterisk: 42,
+  Plus: 43,
+  Comma: 44,
+  Minus: 45,
+  Period: 46,
+  Slash: 47,
+  Hash: 35,
+  Dollar: 36,
+  Percent: 37,
+  Ampersand: 38,
+  Digit0: 48,
+  Digit1: 49,
+  Digit2: 50,
+  Digit3: 51,
+  Digit4: 52,
+  Digit5: 53,
+  Digit6: 54,
+  Digit7: 55,
+  Digit8: 56,
+  Digit9: 57,
+  Colon: 58,
+  Semicolon: 59,
+  Less: 60,
+  Equals: 61,
+  Greater: 62,
+  Question: 63,
+  At: 64,
+  Leftbracket: 91,
+  Backslash: 92,
+  Rightbracket: 93,
+  Caret: 94,
+  Underscore: 95,
+  Backquote: 96,
+  KeyA: 97,
+  KeyB: 98,
+  KeyC: 99,
+  KeyD: 100,
+  KeyE: 101,
+  KeyF: 102,
+  KeyG: 103,
+  KeyH: 104,
+  KeyI: 105,
+  KeyJ: 106,
+  KeyK: 107,
+  KeyL: 108,
+  KeyM: 109,
+  KeyN: 110,
+  KeyO: 111,
+  KeyP: 112,
+  KeyQ: 113,
+  KeyR: 114,
+  KeyS: 115,
+  KeyT: 116,
+  KeyU: 117,
+  KeyV: 118,
+  KeyW: 119,
+  KeyX: 120,
+  KeyY: 121,
+  KeyZ: 122,
+  Delete: 127,
+  CapsLock: 1073741881,
+  F1: 1073741882,
+  F2: 1073741883,
+  F3: 1073741884,
+  F4: 1073741885,
+  F5: 1073741886,
+  F6: 1073741887,
+  F7: 1073741888,
+  F8: 1073741889,
+  F9: 1073741890,
+  F10: 1073741891,
+  F11: 1073741892,
+  F12: 1073741893,
+  PrintScreen: 1073741894,
+  ScrollLock: 1073741895,
+  Pause: 1073741896,
+  Insert: 1073741897,
+  Home: 1073741898,
+  PageUp: 1073741899,
+  End: 1073741901,
+  PageDown: 1073741902,
+  ArrowRight: 1073741903,
+  ArrowLeft: 1073741904,
+  ArrowDown: 1073741905,
+  ArrowUp: 1073741906,
+  NumLock: 1073741907,
+  Divide: 1073741908,
+  Multiply: 1073741909,
+  Subtract: 1073741910,
+  Add: 1073741911,
+  '/': 1073741908,
+  '*': 1073741909,
+  '-': 1073741910,
+  '+': 1073741911,
+  '1': 1073741913,
+  '2': 1073741914,
+  '3': 1073741915,
+  '4': 1073741916,
+  '5': 1073741917,
+  '6': 1073741918,
+  '7': 1073741919,
+  '8': 1073741920,
+  '9': 1073741921,
+  '0': 1073741922,
+  Separator: 1073741923,
+  F13: 1073741928,
+  F14: 1073741929,
+  F15: 1073741930,
+  F16: 1073741931,
+  F17: 1073741932,
+  F18: 1073741933,
+  F19: 1073741934,
+  F20: 1073741935,
+  F21: 1073741936,
+  F22: 1073741937,
+  F23: 1073741938,
+  F24: 1073741939,
+  Execute: 1073741940,
+  Help: 1073741941,
+  ContextMenu: 1073741942,
+  Select: 1073741943,
+  MediaStop: 1073741944,
+  Redo: 1073741945,
+  Again: 1073741945,
+  Undo: 1073741946,
+  Cut: 1073741947,
+  Copy: 1073741948,
+  Paste: 1073741949,
+  Find: 1073741950,
+  AudioVolumeMute: 1073741951,
+  AudioVolumeUp: 1073741952,
+  AudioVolumeDown: 1073741953,
+  Cancel: 1073741979,
+  Clear: 1073741980,
+  Separator: 1073741983,
+  CrSel: 1073741987,
+  ExSel: 1073741988,
+  Decimal: 1073742044,
+  ControlRight: 1073742048,
+  ShiftLeft: 1073742049,
+  AltLeft: 1073742050,
+  MetaLeft: 1073742051,
+  ControlRight: 1073742052,
+  ShiftRight: 1073742053,
+  AltRight: 1073742054,
+  MetaRight: 1073742055,
+  MediaNextTrack: 1073742082,
+  MediaPreviousTrack: 1073742083,
+  MediaPause: 1073742084, // Maybe Stop ?
+  MediaPlay: 1073742085,
+  AudioVolumeMute: 1073742086,
+  LaunchWebBrowser: 1073742088,
+  LaunchMail: 1073742089,
+  LaunchApplication2: 1073742090,
+  LaunchApplication1: 1073742091,
+  BrowserSearch: 1073742092,
+  BrowserHome: 1073742093,
+  BrowserBack: 1073742094,
+  BrowserForward: 1073742095,
+  BrowserStop: 1073742096,
+  BrowserRefresh: 1073742097,
+  BrowserFavorites: 1073742098,
+  BrightnessDown: 1073742099,
+  BrightnessUp: 1073742100,
+  DisplaySwap: 1073742101,
+  Eject: 1073742105,
+  Hibernate: 1073742106,
+}
+
+const extraSDLKeys = {
+  'KP_ENTER': 1073741912,
+  'APPLICATION': 1073741925,
+  'POWER': 1073741926,
+  'KP_EQUALS': 1073741927,
+  'KP_COMMA': 1073741957,
+  'KP_EQUALSAS400': 1073741958,
+  'ALTERASE': 1073741977, // EraseEof
+  'SYSREQ': 1073741978,
+  'PRIOR': 1073741981,
+  'RETURN2': 1073741982,
+  'OUT': 1073741984,
+  'OPER': 1073741985,
+  'CLEARAGAIN': 1073741986,
+  'KP_00': 1073742000,
+  'KP_000': 1073742001,
+  'THOUSANDSSEPARATOR': 1073742002,
+  'DECIMALSEPARATOR': 1073742003,
+  'CURRENCYUNIT': 1073742004,
+  'CURRENCYSUBUNIT': 1073742005,
+  'KP_LEFTPAREN': 1073742006,
+  'KP_RIGHTPAREN': 1073742007,
+  'KP_LEFTBRACE': 1073742008,
+  'KP_RIGHTBRACE': 1073742009,
+  'KP_TAB': 1073742010,
+  'KP_BACKSPACE': 1073742011,
+  'KP_A': 1073742012,
+  'KP_B': 1073742013,
+  'KP_C': 1073742014,
+  'KP_D': 1073742015,
+  'KP_E': 1073742016,
+  'KP_F': 1073742017,
+  'KP_XOR': 1073742018,
+  'KP_POWER': 1073742019,
+  'KP_PERCENT': 1073742020,
+  'KP_LESS': 1073742021,
+  'KP_GREATER': 1073742022,
+  'KP_AMPERSAND': 1073742023,
+  'KP_DBLAMPERSAND': 1073742024,
+  'KP_VERTICALBAR': 1073742025,
+  'KP_DBLVERTICALBAR': 1073742026,
+  'KP_COLON': 1073742027,
+  'KP_HASH': 1073742028,
+  'KP_SPACE': 1073742029,
+  'KP_AT': 1073742030,
+  'KP_EXCLAM': 1073742031,
+  'KP_MEMSTORE': 1073742032,
+  'KP_MEMRECALL': 1073742033,
+  'KP_MEMCLEAR': 1073742034,
+  'KP_MEMADD': 1073742035,
+  'KP_MEMSUBTRACT': 1073742036,
+  'KP_MEMMULTIPLY': 1073742037,
+  'KP_MEMDIVIDE': 1073742038,
+  'KP_PLUSMINUS': 1073742039,
+  'KP_CLEAR': 1073742040,
+  'KP_CLEARENTRY': 1073742041,
+  'KP_BINARY': 1073742042,
+  'KP_OCTAL': 1073742043,
+  'KP_HEXADECIMAL': 1073742045,
+  'MODE': 1073742081, // ModeChange ?
+  'MEDIASELECT': 1073742087,
+  'KBDILLUMTOGGLE': 1073742102,
+  'KBDILLUMDOWN': 1073742103,
+  'KBDILLUMUP': 1073742104,
+}
+
+const keyAliases = [ ...Object.entries(SDLKeys), ...Object.entries(SDLKeys) ]
+  .reduce((acc, [ key, code ]) => (acc[code] || (acc[code] = key), acc), {
+  1073741923: 'kp.',
+  1073741927: 'kp=',
+  1073741913: 'kp1',
+  1073741914: 'kp2',
+  1073741915: 'kp3',
+  1073741916: 'kp4',
+  1073741917: 'kp5',
+  1073741918: 'kp6',
+  1073741919: 'kp7',
+  1073741920: 'kp8',
+  1073741921: 'kp9',
+  1073741922: 'kp0',
+  0: ' ',
+  48: '0',
+  49: '1',
+  50: '2',
+  51: '3',
+  52: '4',
+  53: '5',
+  54: '6',
+  55: '7',
+  56: '8',
+  57: '9',
+  97: 'A',
+  98: 'B',
+  99: 'C',
+  100: 'D',
+  101: 'E',
+  102: 'F',
+  103: 'G',
+  104: 'H',
+  105: 'I',
+  106: 'J',
+  107: 'K',
+  108: 'L',
+  109: 'M',
+  110: 'N',
+  111: 'O',
+  112: 'P',
+  113: 'Q',
+  114: 'R',
+  115: 'S',
+  116: 'T',
+  117: 'U',
+  118: 'V',
+  119: 'W',
+  120: 'X',
+  121: 'Y',
+  122: 'Z',
+  59: ';',
+  61: '=',
+  91: '[',
+  92: '\\',
+  93: ']',
+  96: '`',
+  39: "'",
+  44: ',',
+  45: '-',
+  46: '.',
+  47: '/',
+  1073741903: 'Right',
+  1073741904: 'Left',
+  1073741905: 'Down',
+  1073741906: 'Up',
+})
+
+const defaultConfigText = `version 0
+fullscreen 0
+borderless 0
+vsync 1
+window_width 1280
+window_height 720
+gamma 1.00
+screen_shake 1
+quality_lighting 1
+music_volume 1.00
+combat_volume 1.00
+sfx_volume 1.00
+show_helm 1
+auto_walk_up_one 1
+default_style 0
+hp_bar 0
+map_mode 0
+latest_news 56
+first_tips 0
+key_move_left 97
+key_move_right 100
+key_move_up 119
+key_crouch 115
+key_jump 32
+key_interact 101
+key_recharge 114
+key_sleep 122
+key_shift 1073742049
+key_hotbar_1 49
+key_hotbar_alt_1 0
+key_hotbar_2 50
+key_hotbar_alt_2 0
+key_hotbar_3 51
+key_hotbar_alt_3 0
+key_hotbar_4 52
+key_hotbar_alt_4 0
+key_hotbar_5 53
+key_hotbar_alt_5 0
+key_hotbar_6 54
+key_hotbar_alt_6 102
+key_hotbar_7 55
+key_hotbar_alt_7 0
+key_hotbar_8 56
+key_hotbar_alt_8 0
+key_hotbar_9 57
+key_hotbar_alt_9 104
+key_hotbar_10 48
+key_hotbar_alt_10 103
+key_hotbar_11 45
+key_hotbar_alt_11 119
+key_hotbar_12 61
+key_hotbar_alt_12 113
+key_inventory 105
+key_inventory_alt 98
+key_crafting 112
+key_crafting_alt 99
+key_minimap 109
+key_minimap_alt 9
+key_minimap_up 1073741906
+key_minimap_down 1073741905
+key_survival 118
+key_enter 13
+key_escape 27
+key_recall 116
+`
+
+const memo = {}
+const getElement = key => key
+  && String(key) !== '0'
+  && (key in memo ? memo[key] : (memo[key] = document.querySelector(`.key[data-key=${key}]`)))
+
+const parseConfig = text => text
+  .split('\n')
+  .map(l => l.trim())
+  .filter(Boolean)
+  .map(line => line.split(' '))
+  .reduce((conf, [key, value]) => (conf[key] = value, conf), {})
+
+const defaultConfig = parseConfig(defaultConfigText)
+const configKeys = Object.keys(defaultConfig).filter(key => key.startsWith('key_'))
+const getCode = key => getElement(key) ? getElement(key).code : defaultConfig[key]
+const getKeyWithCode = code => configKeys.find(key => String(getCode(key)) === String(code))
+const delCode = key => {
+  const el = getElement(key)
+  if (!el) return
+  el.code = 0
+  el.textContent = ''
+}
+
+const setCode = (key, code) => {
+  const el = getElement(key)
+  if (!el) return
+  console.log(code, getKeyWithCode(code))
+  delCode(getKeyWithCode(code))
+  el.textContent = keyAliases[code] || ''
+  el.code = code
+}
+
+localStorage.config || (localStorage.config = defaultConfig)
+for (const [ key, value ] of Object.entries(parseConfig(localStorage.config))) {
+  setCode(key, value)
+}
+
+const configElement = document.getElementById('config')
+const updateConfig = () => localStorage.config = configElement
+  .textContent = Object.keys(defaultConfig)
+  .map(key => `${key} ${getElement(key) ? getElement(key).code : defaultConfig[key]}`)
+  .join('\n')
+
+let currentElement = document.querySelector(':hover')
+let configIsSelected = false
+addEventListener('mouseover', e => {
+  currentElement = e.target
+  if (currentElement !== configElement) {
+    configIsSelected = false
+  }
+})
+addEventListener('contextmenu', e => {
+  const { key } = currentElement.dataset
+  if (!key) return
+  e.preventDefault()
+  delCode(key)
+  updateConfig()
+})
+
+addEventListener('keydown', e => {
+  const { key } = currentElement.dataset
+  if (!key) return
+  e.preventDefault()
+  setCode(key, SDLKeys[e.code] || 0)
+  updateConfig()
+})
+
+configElement.addEventListener('click', e => {
+  if (configIsSelected) return
+  configIsSelected = true
+  e.preventDefault()
+  const range = document.createRange();
+  range.selectNode(e.target)
+  getSelection().removeAllRanges()
+  getSelection().addRange(range)
+})
+
+updateConfig()
+console.log(configKeys.map(key => ({ key, code: getCode(key) })))
+</script>
+</body>
+</html>
